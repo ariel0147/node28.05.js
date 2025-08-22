@@ -49,4 +49,21 @@ app.get('/L:id', (req, res) => {
     res.json(list[id]);
 })
 
+app.patch('/L:id', (req, res) => {
+    let id = req.params.id;
+    if(list.length <id || id<0||list[id==null]){
+        return res.status(400).json({message:"no"});
+    }
+    let obj = list[id];
+    let text = req.body.txt;
+    if (!text) {
+        res.status(400).json({message: "no"});
+    }
+
+    obj.text = text;
+    res.json(list[id]);
+
+})
+
+
 app.listen(port,()=>{console.log(`http://localhost:${port}`)});
