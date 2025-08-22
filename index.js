@@ -19,12 +19,12 @@ app.get('/L', (req, res) => {
 app.post('/L', (req, res) => {
     let text = req.body.txt;
     let id = nextid++;
-
+    let stay = false;
     if (!text){
         res.status(400).json({message:"no"});
 
     }else {
-        let task = {id,text};
+        let task = {id,text,stay};
         list[id] = task;
     }
 
@@ -54,16 +54,21 @@ app.patch('/L:id', (req, res) => {
     if(list.length <id || id<0||list[id==null]){
         return res.status(400).json({message:"no"});
     }
-    let obj = list[id];
-    let text = req.body.txt;
-    if (!text) {
-        res.status(400).json({message: "no"});
+    let stay = req.body.stay;
+    if (stay!=undefined){
+        list[id].stay = stay;
     }
 
-    obj.text = text;
+    let text = req.body.txt;
+    if (text) {
+        list[id].text = text;
+    }
+
+
     res.json(list[id]);
 
 })
+
 
 
 app.listen(port,()=>{console.log(`http://localhost:${port}`)});
