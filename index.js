@@ -15,14 +15,6 @@ app.get('/L', (req, res) => {
     res.json(list);
 });
 
-// app.get('/L/:p', (req, res) => {
-//   let list1 = req.params.p;
-//     let obj = {list1};
-//     list.push(obj);
-//
-//     res.json({message:"ok"});
-//
-// });
 
 app.post('/L', (req, res) => {
     let text = req.body.txt;
@@ -46,6 +38,15 @@ app.delete('/L:id', (req, res) => {
     }
     list[id]=null;
     res.status(200).json({message:"list_delete"});
+})
+
+app.get('/L:id', (req, res) => {
+    let id = req.params.id;
+    if(list.length <id || id<0||list[id==null]){
+        return res.status(400).json({message:"no"});
+    }
+
+    res.json(list[id]);
 })
 
 app.listen(port,()=>{console.log(`http://localhost:${port}`)});
