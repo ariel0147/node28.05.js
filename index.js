@@ -36,9 +36,16 @@ app.post('/L', (req, res) => {
         list[id] = task;
     }
 
-
-
-
     res.status(201).json({message:"ok"});
 })
+
+app.delete('/L:id', (req, res) => {
+    let id = req.params.id;
+    if(list.length <id || id<0){
+        return res.status(400).json({message:"no"});
+    }
+    list[id]=null;
+    res.status(200).json({message:"list_delete"});
+})
+
 app.listen(port,()=>{console.log(`http://localhost:${port}`)});
