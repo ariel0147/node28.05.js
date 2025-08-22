@@ -25,11 +25,19 @@ app.get('/L', (req, res) => {
 // });
 
 app.post('/L', (req, res) => {
-    let id = nextid++;
     let text = req.body.txt;
-    let task = {id,text};
+    let id = nextid++;
 
-    list[id] = task;
+    if (!text){
+        res.status(400).json({message:"no"});
+
+    }else {
+        let task = {id,text};
+        list[id] = task;
+    }
+
+
+
 
     res.status(201).json({message:"ok"});
 })
