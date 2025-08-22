@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 let list = [];
+let nextid=1;
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -13,13 +14,23 @@ app.get('/L', (req, res) => {
 
     res.json(list);
 });
-app.get('/L/:p', (req, res) => {
-  let list1 = req.params.p;
-    let obj = {list1};
-    list.push(obj);
 
-    res.json({message:"ok"});
+// app.get('/L/:p', (req, res) => {
+//   let list1 = req.params.p;
+//     let obj = {list1};
+//     list.push(obj);
+//
+//     res.json({message:"ok"});
+//
+// });
 
+app.post('/L', (req, res) => {
+    let id = nextid++;
+    let text = req.body.txt;
+    let task = {id,text};
 
-});
+    list[id] = task;
+
+    res.status(201).json({message:"ok"});
+})
 app.listen(port,()=>{console.log(`http://localhost:${port}`)});
