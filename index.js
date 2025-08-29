@@ -3,6 +3,8 @@ const app = express();
 const port = 3000;
 let list = [];
 let nextid=1;
+
+app.use(express.static(__dirname));
 app.use(express.json());
 
 app.get('/', (req, res) => {

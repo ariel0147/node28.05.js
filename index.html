@@ -3,8 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
- <h1>good morning</h1>
+ <h1>projct node js</h1>
+ <table border="1" id="Table-list">
+     <tr>
+     <th> id</th>
+     <th> text</th>
+     <th> stay</th>
+     </tr>
+
+
+ </table>
+<script>
+    async function getdata(){
+        let response = await fetch('/L');
+        let data = await response.json();
+        console.log(data);
+        createTable(data);
+    }
+    getdata();
+
+    function createTable(data){
+        let txt = "";
+
+        for(obj of data){
+            txt += "<tr>";
+           if (obj != null){
+            for(k in obj){
+                https://github.com/ariel0147/node28.05.js
+
+                txt += `<td>${obj[k]}</td>`;
+
+            }
+            txt += "</tr>";
+        }
+        document.getElementById("Table-list").innerHTML = txt
+    }
+    }
+
+
+    // console.log(fetch('http://localhost:3000/s'))
+</script>
 </body>
 </html>
