@@ -51,7 +51,7 @@ app.get('/L:id', (req, res) => {
     res.json(list[id]);
 })
 
-app.patch('/L:id', (req, res) => {
+app.patch('/L/:id', (req, res) => {
     let id = req.params.id;
     if(list.length <id || id<0||list[id==null]){
         return res.status(400).json({message:"no"});
@@ -70,6 +70,8 @@ app.patch('/L:id', (req, res) => {
     res.json(list[id]);
 
 })
+
+
 
 
 

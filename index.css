@@ -4,4 +4,16 @@ body{
 }
 table{
     margin: 0px auto;
+    border-collapse: collapse;
+
+    background: aqua;
+}
+th, td {
+    padding: 10px;
+}
+label{
+    margin: 5px;
+    padding: 10px;
+    border: solid 1px #ddd;
+    border-radius: 25px;
 }

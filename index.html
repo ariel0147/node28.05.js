@@ -6,12 +6,28 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
- <h1>projct node js</h1>
+ <h1>רשימת משימות</h1>
+ <div>
+     <input type="hidden" id="id" >
+<label for="txt">הכנס משימה</label>
+     <br>
+     <br>
+     <br>
+     <textarea id="txt" maxlength="50"></textarea>
+     <br>
+     <br>
+     <button onclick="chekvalue()">send</button>
+ </div>
+ <br>
+ <hr>
+
  <table border="1" id="Table-list">
      <tr>
      <th> id</th>
      <th> text</th>
-     <th> stay</th>
+         <th>בוצע</th>
+      <th> edit</th>
+         <th> delete</th>
      </tr>
 
 
@@ -25,26 +41,164 @@
     }
     getdata();
 
+    // function createTable(data){
+    //     let txt = "";
+    //
+    //     for(obj of data){
+    //         txt += "<tr>";
+    //        if (obj != null){
+    //         for(k in obj){
+    //
+    //
+    //             txt += `<td>${obj[k]}</td>`;
+    //
+    //         }
+    //         txt += "</tr>";
+    //     }
+    //     document.getElementById("Table-list").innerHTML = txt
+    // }
+    // }
+
+
     function createTable(data){
         let txt = "";
 
         for(obj of data){
-            txt += "<tr>";
-           if (obj != null){
-            for(k in obj){
-                https://github.com/ariel0147/node28.05.js
+            if (obj){
+                txt += "<tr>";
+                txt += `<td>${obj.id}</td>`;
+                txt += `<td>${obj.text}</td>`;
 
-                txt += `<td>${obj[k]}</td>`;
-
+                txt += `<td><input type="checkbox" ${obj.stay ? "checked" : ""} onchange="toggleStay(${obj.id}, this.checked)"></td>`;
+                txt += `<td><button onclick="edittask(${obj.id})">✏️</button></td>`;
+                txt += `<td><button onclick=deletetask(${obj.id})>🗑️</button></td>`;
+                txt += `</tr>`;
             }
-            txt += "</tr>";
-        }
+    }
         document.getElementById("Table-list").innerHTML = txt
     }
+
+async function addtask(){
+
+        try {
+            let txt = document.getElementById("txt").value;
+            let response = await fetch('/L', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({txt})
+
+
+            })
+
+            if (response.status == 201){
+                alert("נוסף בהצלחה")
+            }
+
+            getdata();
+            document.getElementById("txt").value = "";
+        }catch(err){
+           alert(err)
+       }
+
+}
+
+    async function deletetask(id){
+        try {
+
+            let response = await fetch(`/L${id}`,{
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+
+            })
+            if (response.ok){
+
+                alert("נמחק בהצלחה")
+                getdata();
+            }
+
+        }catch(err){
+            alert(err)
+        }
+
+    }
+
+    async function edittask(id){
+        try {
+
+            let response = await fetch(`/L${id}`,{
+                method: 'get',
+
+            })
+            let data = await response.json();
+            // console.log(data.text);
+
+               document.getElementById("id").value = data.id;
+               document.getElementById("txt").value = data.text;
+        }catch(err){
+            alert(err)
+        }
+
+    }
+
+    async function updatatask(id){
+        console.log(id)
+        try {
+            let txt = document.getElementById("txt").value;
+            let response = await fetch(`/L/${id}`,{
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({txt})
+
+            })
+
+            if (response.ok){
+
+                alert("נערך בהצלחה")
+                getdata();
+            }
+
+            document.getElementById("txt").value = "";
+            document.getElementById("id").value = ""
+
+
+        }catch(err){
+            alert(err)
+        }
+
     }
 
 
-    // console.log(fetch('http://localhost:3000/s'))
+     function chekvalue(){
+     let id = document.getElementById("id").value;
+     if (id){
+         updatatask(id)
+     }
+     else {addtask()}
+    }
+
+    async function toggleStay(id, checked) {
+        try {
+            let response = await fetch(`/L/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ stay: checked })
+            });
+
+            if (!response.ok) {
+                alert("שגיאה בעדכון סטטוס");
+            } else {
+                console.log("עודכן בהצלחה");
+            }
+        } catch (err) {
+            alert(err);
+        }
+    }
+
+
+
+
+
 </script>
 </body>
 </html>
