@@ -1,12 +1,16 @@
 body{
     margin: 0px auto;
     text-align: center;
+    font-style: normal;
+    background-image:url("תמונה 2.jpg") ;
 }
 table{
     margin: 0px auto;
     border-collapse: collapse;
+    /*background-image: url("תמונה 1.jpg");*/
+    background: black;
+    color: #dddddd;
 
-    background: aqua;
 }
 th, td {
     padding: 10px;
@@ -16,4 +20,30 @@ label{
     padding: 10px;
     border: solid 1px #ddd;
     border-radius: 25px;
+    background: black;
+    color: #dddddd;
+
+}
+h1{
+    /*margin: 0px auto;*/
+    /*width: 50px;*/
+    /*height: 25px;*/
+    background: black;
+    color: #dddddd;
+}
+.rowclass{
+    text-decoration:line-through ;
+}
+#d:hover{
+    background: red;
+
+}
+#e:hover{
+    background: yellow;
+}
+#s:hover{
+    width: 75px;
+    height: 30px;
+    background: chartreuse;
+    transition: width 2s
 }

@@ -16,11 +16,13 @@
      <textarea id="txt" maxlength="50"></textarea>
      <br>
      <br>
-     <button onclick="chekvalue()">send</button>
+     <button id="s" onclick="chekvalue()">send</button>
  </div>
  <br>
- <hr>
-
+ <br>
+ <br>
+ <br>
+ <br>
  <table border="1" id="Table-list">
      <tr>
      <th> id</th>
@@ -41,37 +43,21 @@
     }
     getdata();
 
-    // function createTable(data){
-    //     let txt = "";
-    //
-    //     for(obj of data){
-    //         txt += "<tr>";
-    //        if (obj != null){
-    //         for(k in obj){
-    //
-    //
-    //             txt += `<td>${obj[k]}</td>`;
-    //
-    //         }
-    //         txt += "</tr>";
-    //     }
-    //     document.getElementById("Table-list").innerHTML = txt
-    // }
-    // }
-
 
     function createTable(data){
         let txt = "";
 
         for(obj of data){
             if (obj){
-                txt += "<tr>";
-                txt += `<td>${obj.id}</td>`;
+                let rowclass = obj.stay ? "rowclass" : "";
+                let check = obj.stay ? "checked" : "";
+                txt += "<tr class= ${rowclass}>";
+                // txt += `<td>${obj.id}</td>`;
                 txt += `<td>${obj.text}</td>`;
 
                 txt += `<td><input type="checkbox" ${obj.stay ? "checked" : ""} onchange="toggleStay(${obj.id}, this.checked)"></td>`;
-                txt += `<td><button onclick="edittask(${obj.id})">✏️</button></td>`;
-                txt += `<td><button onclick=deletetask(${obj.id})>🗑️</button></td>`;
+                txt += `<td><button id="e" onclick="edittask(${obj.id})">✏️</button></td>`;
+                txt += `<td><button id="d" onclick=deletetask(${obj.id})>🗑️</button></td>`;
                 txt += `</tr>`;
             }
     }
