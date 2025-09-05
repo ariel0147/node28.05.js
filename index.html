@@ -21,8 +21,13 @@
  <br>
  <br>
  <br>
+ <input id="searc" placeholder="searc..." oninput="search()">
  <br>
  <br>
+ <br>
+ <br>
+ <br>
+
  <table border="1" id="Table-list">
      <tr>
      <th> id</th>
@@ -35,9 +40,12 @@
 
  </table>
 <script>
+    let data = [] ;
+
+
     async function getdata(){
         let response = await fetch('/L');
-        let data = await response.json();
+        data = await response.json();
         console.log(data);
         createTable(data);
     }
@@ -181,7 +189,17 @@ async function addtask(){
         }
     }
 
+function search(){
 
+        let val = document.getElementById("searc").value;
+        let sorted =  data.filter(obj => obj && obj.text.includes(val))
+        if (sorted){
+            createTable(sorted)
+        }
+        else {
+            createTable(data);
+        }
+}
 
 
 
